@@ -1,0 +1,119 @@
+-----------
+Version 0.7.5
+* Major bug fixes:
+	- Problem with the background changer system. This it changes the background color and you still have a green background although you don't have anyone Background instructions in the .ideskrc file. The solution let you can use the Background.Delay option with 0 value to disable the background system (without delete nothing more from .ideskrc file). But if you don't have anyone Background instructions, the default value will be 0 anyway. The bug is fixed.
+	- Problem with startup notification support (option --enable-libsn). The idesk-0.7.4 chrashes after starting xmms. This bug was reported by Gentoo users. If you don't have the support for statup notification the program works well. The bug is fixed.
+
+* Minor bug fixed:
+	- When you click with mouse either for reload Idesk or run a program, and you don't move the mouse of position then all icons stay with a glow effect how they had obtained the focus (all in the same time), they back to the normal state if you pass the mouse through the each icon. This bug is solved.
+	- Fixed a problem with the Idesk source (configure.in file) for avoid the xlibs-dev dependencies.
+
+Version 0.7.4
+ * Features:
+	- New options for Background's group. The options are:
+	  + Background.File: Now the option Background.File for background image (wallpaper) works fine. (Default: None).
+	  + Background.Delay: Set the image change time in minutes format. (Default: 5 min). Min 1 min, Max 1440 min. (with 0 value is disable)
+	  + Background.Source: Let you can define the folder where there are some images. If in the folder there aren't images or the folder didn't exist, then idesk looking for Background.File option. (Default: None).
+	  + Background.Mode: Is the display mode for the images, the possible values are: Stretch, Scale, Center, Fit o Mirror). (Default: Stretch).
+	  + Background.Color: Let you set the Background color if you didn't put a Background.File value or Background.Source path hadn't images. If you didn't put a Background.File and Background.Color value then the Background  is transparent and it get the background from the original Desktop background. (Default: #A2CD70).
+	- Support for Esetroot pixmap (referer to bsetroot or bsetbg programs). Inside Fluxbox is very cool). It works with the new Background's wallpaper support.
+	- New option value 'auto' for ToolTip.CaptionPlacement let the tooltip will be showed on left down side of icon. (Thanks to kaneda <kaneda@bohater.net>)
+
+ * Major changes:
+	- Idesk now only can run one instance in the same DISPLAY, this let avoid run two or more idesk's instances in the same DISPLAY, producing the program works bad. But if the DISPLAY is different then idesk program should run fine and run another instance.
+	- Some old options changed its reache. The options Background.Delay, Background.File, Background.Mode, Background.Source, Background.Color, ToolTip.FontSize, ToolTip.FontName, ToolTip.ForeColor, ToolTip.BackColor ToolTip.CaptionOnHover, ToolTip.CaptionPlacement and  Transparency only are valid inside .ideskrc file and not inside the *.lnk icons files. The another options are valid in both types of files.
+ 
+* Minor bug fixed:
+	- Fixed a error in tooltip option that produced a blink efect when the tooltip is showed. The problem was in *.lnk files when the Width/Height attributes were omitted.
+	- Fixed bug when the options Background.File and Background.Source doesnt' exist or there aren't valid PATH's for them.
+	- Fixed many other minor bugs.
+	  
+
+Version 0.7.3
+ * Minor bug fixed:
+	- Error in Makefile.am produce a problem with the install path.
+	- Bug fixed. Problem with image produced that a section of the
+          icon was removed and the icon gets filled with black lines.
+
+Version 0.7.2
+ * Features:
+	- Now if ${HOME}/.ideskrc file don't exist then the default ${PREFIX}/share/idesk/dot.ideskrc file is loaded with default options.
+	- if ${HOME}/.idesktop files doesn't exist then the default
+	  ${PREFIX}/share/idesk/default.lnk file is loaded with default options
+but remember you must create the directory .idesktop.
+	- New option Background.File for background image (wallpaper) in
+ .ideskrc file example Background.File: /path_to_image/background.jpg
+	- Optional feature for Background.File is the default folder_home.png
+	  image in ${PREFIX}/share/idesk directory. If you define Background.File option and that image is invalid or it isn't exist then folder_home.png file image is loaded.
+	- Regroup the new options in .ideskrc file for tooltip
+		+ ToolTip.FontSize: 11
+  		+ ToolTip.FontName: gothic
+  		+ ToolTip.ForeColor: #0000FF
+  		+ ToolTip.BackColor: #FFFFFF
+  		+ ToolTip.CaptionOnHover: true
+  		+ ToolTip.CaptionPlacement: Right
+ * Minor bug fixes:
+	- Clean up the code
+	- Fixed the init scripts (automake version problems)
+	- Now only .lnk type extension for the image files are valid images, any other extension is a invalid image and they aren't loaded.
+	
+Version 0.7.1
+* Minor bug fixes:
+	* Fixed the default value for BackColorTip attribute (background color 
+	for tooltip) in Tooltip (don't see the letters)
+	* Fixed the default value for FillStyle attribute. Now is "None" the
+	default value instead "FillHLine". Valid values are:
+	FillInvert, FillHLine, FillVLine and None.
+
+Version 0.7.0
+ * Features:
+        - Added the GNU configure and build system for Idesk. Now is easy
+          configure, build and install this project.
+ 	- Now Startup Notification is optional (with --enable-libsn option).
+ 	  Default is disable.
+        - 'FillStyle' attribute. Define the appearance for the icon when the
+          user click it.
+        - Now is possible define the Font, Size, Foreground and Background 
+          color for the ToolTip.
+
+ * Bug fixes:
+
+    * Fixed the old bug for transparent effect when the user run idesk and
+      others windows were open, Idesk take a "snapshot" from the current screen 
+      but also take from the others windows, producing that the transparent 
+      effect wasn't seen good (horrible effect produced).
+
+    * Fix the problem with SnapShadow have the value true.
+
+    * Fix the bug, when restart the program with double middle click.
+   
+    * Fix the error of the imlib with color_modifier null.
+ 
+    * Fix the bug, when the Caption attribute is empty string. 
+      (Thanks to Rene De La Garza <rene.delagarza@gmail.com>) 
+
+Version 0.6.1
+
+Bug fixes. Font problem and idesk restarting.
+
+Version 0.6.0
+   Porting from Imlib to Imlib2 ready!!! In addition, better support for mouse actions (EnterNotify and LeaveNotify events). The SVG support was remove because  not implemented in Imlib2 yet and a few fixes and clean ups here and there. Now the application run although it fails in loading some configuration files icon. GTK and GDK support isn't necessary now. Startup notification support for launch applications!!! but is very experimental and under some Window Managers it will not worki ... and more. See the Screenshots. 
+
+Version 0.5.6
+   Bug-fixes and better support for SVG.
+
+Version 0.5.5
+    Multiple commands, completely configurable actions, automatic background updating with Esetroot, a new option to only show the caption on mouseover, and a few fixes and clean ups here and there.
+
+Version 0.5.2.1
+    Fixed a few bugs here and there. Took away the need for the SVG: true field.and other things that I forgot to list.
+
+Version 0.5.0
+	Added SVG support using librsvg. Still rudimentary, need to check for bugs andd leaks.
+
+	
+Version ? (maybe .5)
+	New idesk mostly coding structure changes. Code was re-written to be more object oriented and modular. Added single-click, click-delay, and snapping options. 
+
+Version .3 - .35
+	

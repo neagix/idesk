@@ -1,0 +1,23 @@
+-----------
+See ChangeLog for more details
+-----------
+Version 0.7.5
+* Major bug fixes:
+        - Problem with the background changer system. This it changes the backgr
+ound color and you still have a green background although you don't have anyone
+Background instructions in the .ideskrc file. The solution let you can use the B
+ackground.Delay option with 0 value to disable the background system (without de
+lete nothing more from .ideskrc file). But if you don't have anyone Background i
+nstructions, the default value will be 0 anyway. The bug is fixed.
+        - Problem with startup notification support (option --enable-libsn). The
+ idesk-0.7.4 chrashes after starting xmms. This bug was reported by Gentoo users
+. If you don't have the support for statup notification the program works well.
+The bug is fixed.
+
+* Minor bug fixed:
+        - When you click with mouse either for reload Idesk or run a program, an
+d you don't move the mouse of position then all icons stay with a glow effect ho
+w they had obtained the focus (all in the same time), they back to the normal st
+ate if you pass the mouse through the each icon. This bug is solved.
+        - Fixed a problem with the Idesk source (configure.in file) for avoid th
+e xlibs-dev dependencies. 
