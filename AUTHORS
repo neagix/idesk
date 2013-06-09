@@ -1,0 +1,27 @@
+You can find the current updated Idesk webpage at:
+http://idesk.sourceforge.net
+
+FixXxeR (avelar@gmail.com):
+    New Admin. Porting to Imlib2 and new other features.
+    IRC: #debianmexico ICQ:98858576
+
+Tim Finley (timmfin@timmfin.net):
+        Features I plan to add are mounting icons and compilation, different images for the different commands (this is how mounting icons might turn out), and configuration using autoconf and automake.
+
+Former developers and other contributions
+
+    Chris (nikon) (nikon@sc.rr.com):
+    	Project creator, can't work on idesk right now.
+    Bryn (curious) (curious@ihug.com.au):
+        Done some work on iDesk in the past, but he's back to help out some more now.
+    scottanious
+        Gave me a perlGtk configuration script for iDesk. Its pretty cool and he or I will eventually extend it some. Available in downloads. 
+
+
+Patch submitters
+	Kaneda <kaneda@bohater.net>
+	 Beta Tester.
+	Rene De La Garza <rene.delagarza@gmail.com>
+	 Some bug fixes.
+
+Idesk is released under the BSD license, which means don't call my code yours, and if you use any of my code, give me credit.
