@@ -24,6 +24,7 @@
 
 #include "DesktopConfig.h"
 #include "Util.h"
+#include <sys/stat.h>
 
 //the initilizer list just sets the program defaults for non-necessary options
 DesktopConfig::DesktopConfig(Database db, string ideskrcFile) :
