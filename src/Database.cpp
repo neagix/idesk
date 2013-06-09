@@ -37,13 +37,13 @@ Database::Database( string  F ) : blankTable()
     DbFile.open(F.c_str(),ios::in);
     
     if (!DbFile.is_open()) {
-        cout << "Cannot load file: " << F << "!! \n";
+        cout << "Cannot read file: " << F << "\nTrying with default\n";
 	string defaults = string(DEFAULT_PREFIX) + "/share/" + string(PACKAGE) + "/dot.ideskrc";
 	Util::copy(defaults,F);
 	DbFile.clear();
 	DbFile.open(F.c_str(),ios::in);
 	if (!DbFile.is_open()) {
-		cout << "Cannot load file: " << F << "!! Exiting.\n";
+		cout << "Cannot read default file: " << F << "\nExiting\n";
 		_exit(1);
 	}
 	
@@ -147,7 +147,7 @@ void Database::Write(const string file)
 void Database::Write( ) {
     ofstream DbFile( File.c_str() );
     if (!DbFile) {
-        cout << "Cannot load file: " << File << "!! Exiting.\n";
+        cout << "Cannot write file: " << File << "\nExiting\n";
         _exit(1);
     }
 
