@@ -143,7 +143,7 @@ void CommonOptions::setCommonDefaults()
     
     fillStyle = "None";
     
-    cursorOver = XC_hand1;
+    cursorOver = XC_top_left_arrow;
 }
 
 void CommonOptions::setDefaultsFromParent(CommonOptions & other)
