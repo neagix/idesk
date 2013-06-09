@@ -1,3 +1,8 @@
+Version 0.7.6 - 9 June 2013 by neagix
+---------------------------
+* fix error during compilation
+
+
 -----------
 Version 0.7.5
 * Major bug fixes:
@@ -110,10 +115,8 @@ Version 0.5.2.1
 
 Version 0.5.0
 	Added SVG support using librsvg. Still rudimentary, need to check for bugs andd leaks.
-
 	
 Version ? (maybe .5)
 	New idesk mostly coding structure changes. Code was re-written to be more object oriented and modular. Added single-click, click-delay, and snapping options. 
 
 Version .3 - .35
-	
