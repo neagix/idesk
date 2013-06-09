@@ -92,10 +92,10 @@ Database::Database( string  F ) : blankTable()
 			if (Line.size()>0){
 				Line = Line.substr( 1, Line.size()-1 );
 				if(getUpper(Buffer) == "ICON"){ //remove all white spaces to filename
-					int pos = Line.find(' ', 0); 
+					int pos = Line.find_first_not_of(" \t", 0);
 					if( pos != string::npos){ //search for white spaces from the end
-						Line =   Line.substr( 0 , pos); 
-					}	    
+						Line =   Line.substr( 0 , Line.size()-pos);
+					}
 					//cout << "Line:'"<< Line <<"'" <<endl;
 				}
 			}
