@@ -26,6 +26,28 @@
 #include "Util.h"
 #include "Misc.h"
 
+#include <algorithm> 
+#include <functional> 
+#include <cctype>
+#include <locale>
+
+// trim from start
+static inline std::string &ltrim(std::string &s) {
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+        return s;
+}
+
+// trim from end
+static inline std::string &rtrim(std::string &s) {
+        s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+        return s;
+}
+
+// trim from both ends
+static inline std::string &trim(std::string &s) {
+        return ltrim(rtrim(s));
+}
+
 Database::Database() : blankTable()
 {
     File = "";
@@ -91,13 +113,15 @@ Database::Database( string  F ) : blankTable()
 		    //cout << "Buffer:'" << Buffer	<< "'" << endl;
 			if (Line.size()>0){
 				Line = Line.substr( 1, Line.size()-1 );
-				if(getUpper(Buffer) == "ICON"){ //remove all white spaces to filename
-					int pos = Line.find_first_not_of(" \t", 0);
+/*				if(getUpper(Buffer) == "ICON")
+				{
+					//remove all white spaces to filename
+					int pos = Line.find(' ', 0); 
 					if( pos != string::npos){ //search for white spaces from the end
-						Line =   Line.substr( 0 , Line.size()-pos);
+						Line =   Line.substr( 0 , pos); 
 					}
-					//cout << "Line:'"<< Line <<"'" <<endl;
-				}
+					cout << "Line:'"<< Line <<"'" <<endl;
+				} */
 			}
                      else
                         Line = "";
@@ -191,13 +215,26 @@ bool Table::isValid()
 }
 
 
+void Table::Set( const string & L, string & V ) {
+    if( Query(L) == "" ) {
+        Label.push_back( L );
+        Value.push_back( V );
+    } else {
+        for(unsigned int i=0; i<Label.size(); i++ )
+            if( Label[i] == L ) Value[i] = trim(V);
+    }         
+}             
+
 void Table::Set( const string & L, const string & V ) {
     if( Query(L) == "" ) {
         Label.push_back( L );
         Value.push_back( V );
     } else {
         for(unsigned int i=0; i<Label.size(); i++ )
-            if( Label[i] == L ) Value[i] = V;
+            if( Label[i] == L ) {
+				Value[i] = V;
+				break;
+			}
     }         
 }             
 

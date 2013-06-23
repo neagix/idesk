@@ -1,2 +1,7 @@
+= Added by neagix - 23 June 2013 =
+- Always-visible captions
+- Support freedesktop .desktop files and deprecate old format
+
+= Original TODO =
 - Menu for reconfiguration the icons options (Caption, Command and Icon) writes only in X11 (like BlackBox or Fluxbox).
 - Especial Icons for Mount and Umount devices.

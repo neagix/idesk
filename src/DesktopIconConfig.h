@@ -2,6 +2,7 @@
  * 
  * Idesk -- DesktopIconConfig.h
  *
+ * Copyright (c) 2013, neagix
  * Copyright (c) 2002, Chris (nikon) (nikon@sc.rr.com)
  * All rights reserved.
  *
@@ -100,7 +101,7 @@ class DesktopIconConfig : public AbstractIconConfig
         int width, height;
 
     public:
-	DesktopIconConfig(const string & fName, CommonOptions * parentData);
+	DesktopIconConfig(const string & fName, Table &table, CommonOptions * parentData);
         virtual ~DesktopIconConfig();
 
         virtual void setIconOptions(Table);

@@ -52,6 +52,7 @@ class Table
         bool isValid();
         void print();
 
+        void Set( const string & L, string & V );
         void Set( const string & L, const string & V );
         string Query( const string & L );
 

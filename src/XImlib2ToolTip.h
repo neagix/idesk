@@ -42,6 +42,8 @@ struct Tooltip
 
 class XImlib2ToolTip
 {
+	private:
+		void draw_caption();
     protected:
         AbstractConfig * config;
         AbstractContainer * container;
@@ -73,7 +75,7 @@ class XImlib2ToolTip
         virtual void createFont();
         virtual void setXY(int &fX, int &fY, int w, int h);
         void event_enter_notify ();
-	void event_leave_notify ();
+		void event_leave_notify ();
         Window getWindow();
 };
 

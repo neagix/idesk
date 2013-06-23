@@ -1,7 +1,14 @@
+Version 0.7.7 - 23 June 2013 by neagix
+---------------------------
+* always trim icon field values
+* added stubs for future FreeDesktopIcon support
+* more sane defaults
+* fixed unnecessary error messages with background loading
+* some source code formatting
+
 Version 0.7.6 - 9 June 2013 by neagix
 ---------------------------
 * fix error during compilation
-
 
 -----------
 Version 0.7.5

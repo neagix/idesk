@@ -38,6 +38,7 @@ idesk_SOURCES =  XDesktopContainer.h  XDesktopContainer.cpp \
 		 XIcon.h XIcon.cpp \
                  XImlib2Image.h XImlib2Image.cpp \
                  Database.h Database.cpp \
+		 FreeDesktopIcon.h FreeDesktopIcon.cpp \
 		 DesktopConfig.h DesktopConfig.cpp \
  		 DesktopIconConfig.h DesktopIconConfig.cpp \
 		 Misc.h Misc.cpp \

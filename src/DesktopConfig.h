@@ -27,21 +27,22 @@
 
 #include "AbstractClasses.h"
 #include "Database.h"
+#include "FreeDesktopIcon.h"
 #include "DesktopIconConfig.h"
 #include <dirent.h>
 
 class DesktopConfig : public AbstractConfig
 {
     protected:
-        bool isLocked;
-        int snapWidth, snapHeight;
-        bool snapOn;
-        bool startSnapLeft, startSnapTop;
+    bool isLocked;
+    int snapWidth, snapHeight;
+    bool snapOn;
+    bool startSnapLeft, startSnapTop;
 	
 	string fileBackground, colorBackground;
 	string sourceBackground, modeBackground;
 	int delayBackground;
-        
+    
 	int transparency;
 	
 	string fontNameTip, foreColorTip, backColorTip;
@@ -49,25 +50,25 @@ class DesktopConfig : public AbstractConfig
 	int fontSizeTip;
 	bool captionTipOnHover;
 	
-        CommonOptions * common;
+    CommonOptions * common;
 
-        virtual void loadIcons();
-        virtual bool backgroundFile(const string & filename);
+    virtual void loadIcons();
+    virtual bool backgroundFile(const string & filename);
 
     public:
 	DesktopConfig(Database db, string ideskrcFile);
-        virtual ~DesktopConfig();
+    virtual ~DesktopConfig();
 
-        virtual void setDefaults();
-        virtual void setOptions(Table);
-        virtual void setDesktopOnlyOptions(Table);
+    virtual void setDefaults();
+    virtual void setOptions(Table);
+    virtual void setDesktopOnlyOptions(Table);
 
-        virtual bool getLocked() { return isLocked; }
-        virtual bool getSnapState() { return snapOn; }
-        virtual bool getStartSnapTop() { return startSnapTop; }
-        virtual bool getStartSnapLeft() { return startSnapLeft; }
-        virtual int getSnapWidth() { return snapWidth; }
-        virtual int getSnapHeight() { return snapHeight; }
+    virtual bool getLocked() { return isLocked; }
+    virtual bool getSnapState() { return snapOn; }
+    virtual bool getStartSnapTop() { return startSnapTop; }
+    virtual bool getStartSnapLeft() { return startSnapLeft; }
+    virtual int getSnapWidth() { return snapWidth; }
+    virtual int getSnapHeight() { return snapHeight; }
 	
 	virtual string getFileBackground(){ return fileBackground;}
 	virtual string getColorBackground(){ return colorBackground;}
@@ -84,25 +85,25 @@ class DesktopConfig : public AbstractConfig
 	virtual string getCaptionTipPlacement() { return captionTipPlacement; }
 	virtual bool getCaptionTipOnHover() { return captionTipOnHover; }
 
-        virtual void saveLockState(bool lockState);
+    virtual void saveLockState(bool lockState);
 
-        virtual bool getBoldness() { return common->getBoldness(); }
+    virtual bool getBoldness() { return common->getBoldness(); }
 
-        virtual bool isShadow() { return common->isShadow(); }
-        virtual int getShadowX() { return common->getShadowX(); }
-        virtual int getShadowY() { return common->getShadowY(); }
-        virtual string getShadowColor() { return common->getShadowColor(); }
+    virtual bool isShadow() { return common->isShadow(); }
+    virtual int getShadowX() { return common->getShadowX(); }
+    virtual int getShadowY() { return common->getShadowY(); }
+    virtual string getShadowColor() { return common->getShadowColor(); }
 
-        virtual bool getSnapShadow() { return common->getSnapShadow(); }
-        virtual int getSnapShadowTrans() {return common->getSnapShadowTrans();}
+    virtual bool getSnapShadow() { return common->getSnapShadow(); }
+    virtual int getSnapShadowTrans() {return common->getSnapShadowTrans();}
 	
-	virtual int getCursorOver() { return common->getCursorOver(); }
-	
-	virtual void loadDefaultIcons();
+    virtual int getCursorOver() { return common->getCursorOver(); }
+		
+    virtual void loadDefaultIcons();
 
-        virtual string getFont() { return common->getFont(); }
-        virtual int getFontSize() { return common->getFontSize(); }
-        virtual string getFontColor() { return common->getFontColor(); }
+    virtual string getFont() { return common->getFont(); }
+    virtual int getFontSize() { return common->getFontSize(); }
+    virtual string getFontColor() { return common->getFontColor(); }
 
 };
 

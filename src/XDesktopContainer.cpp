@@ -97,7 +97,7 @@ void XDesktopContainer::initXWin()
      
      XTextProperty prop;
      Atom start = XInternAtom(display,"_IDESK_START", false);
-     cout << " Idesk starting in " <<  name << endl;
+     cout << "[Idesk] Starting on display " <<  name << endl;
      prop.value = (unsigned char *)name;
      prop.encoding = XA_STRING;
      prop.format = 8;
