@@ -291,7 +291,6 @@ void XImlib2Image::refreshIcon()
 
 void XImlib2Image::repaint()
 {
-	
     XDesktopContainer * xContainer =
 	dynamic_cast<XDesktopContainer *>(container);
     

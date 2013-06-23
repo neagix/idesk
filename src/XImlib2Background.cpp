@@ -410,7 +410,7 @@ void XImlib2Background::ScanImages()
 	struct stat b;
 	
 	if( stat( directory.c_str(), &b ) < 0 ) {
-		cerr << "[idesk] Background's source not found." << endl;
+		cerr << "[idesk] Background source not found." << endl;
 	}
 	
 	

@@ -127,14 +127,14 @@ void DesktopConfig::setDesktopOnlyOptions(Table table)
       if (table.Query("Background.File") != "")
 	    fileBackground = table.Query("Background.File");
       
-      if(fileBackground != ""){
+      if(fileBackground != "" && fileBackground != "None") {
 	      struct stat b;
 	      string directory(getenv("HOME"));
 	      char * s = (char *)fileBackground.c_str();
 	      directory = s[0]=='~' ? directory + &s[1]:s;
 	      if( stat( directory.c_str(), &b ) < 0 ){
+		      cerr << "[idesk] Background file \"" << fileBackground << "\" not found." << endl;
 		      fileBackground = "None";
-		      cerr << "[idesk] Background's file not found." << endl;
 	      }else{
 		      fileBackground = directory;  
 	      }
@@ -148,14 +148,14 @@ void DesktopConfig::setDesktopOnlyOptions(Table table)
       if (table.Query("Background.Source") != "")
 	      sourceBackground = table.Query("Background.Source");
       
-      if(sourceBackground != ""){
+      if(sourceBackground != "" && sourceBackground != "None"){
 	      struct stat b;
 	      string directory(getenv("HOME"));
 	      char * s = (char *)sourceBackground.c_str();
 	      directory = s[0]=='~' ? directory + &s[1]:s;
 	      if( stat( directory.c_str(), &b ) < 0 ) {
 		      sourceBackground ="None";
-		      cerr << "[idesk] Background's source not found." << endl;
+		      cerr << "[idesk] Background source not found." << endl;
 	      }else{
 		      sourceBackground = directory;  
 	      }
@@ -250,15 +250,30 @@ void DesktopConfig::loadIcons()
         if ( !backgroundFile(files[i]->d_name))
         {
             filename = directory + files[i]->d_name;
+            
+            if (filename.size() > 4 && filename.substr(filename.size()-4,filename.size()) == ".lnk")
+            {
+				db = Database(filename);
+				table = db.Query("Icon");
 
-            db = Database(filename);
-            table = db.Query("Icon");
-
-            if (table.isValid())
-            {   
-                iconPtr = new DesktopIconConfig(filename, common); 
-                iconConfigList.push_back(iconPtr);
-            }
+				if (table.isValid())
+				{   
+					iconPtr = new DesktopIconConfig(filename, table, common); 
+					iconConfigList.push_back(iconPtr);
+				} else
+					cout << "Error: \"" << files[i]->d_name << "\" is not a valid .lnk desktop icon\n";
+			} else if (filename.size() > 8 && filename.substr(filename.size()-8,filename.size()) == ".desktop")
+			{
+/*				FreeDesktopIcon fdi(filename);
+				
+				if (fdi.isValid())
+				{
+					iconPtr = new DesktopIconConfig(filename, fdi, common); 
+					iconConfigList.push_back(iconPtr);
+				} else */
+					cout << "Error: \"" << files[i]->d_name << "\" is not a valid .desktop desktop icon\n";
+			} else
+				cout << "Warning: \"" << files[i]->d_name << "\" is not a recognized desktop icon (.lnk or .desktop)\n";
 
             free(files[i]);
         }
@@ -274,8 +289,11 @@ void DesktopConfig::loadDefaultIcons()
 	Util::copy(filename,ideskicon);
 	
 	string iconname = string(DEFAULT_PREFIX) + "/share/" + string(PACKAGE) + "/folder_home.png";
+	
+	Database db(ideskicon);
+	Table table = db.Query("Icon");
 
-	DesktopIconConfig * iconPtr = new DesktopIconConfig(ideskicon, common); 
+	DesktopIconConfig * iconPtr = new DesktopIconConfig(ideskicon, table, common); 
  	iconConfigList.push_back(iconPtr);
 }
 

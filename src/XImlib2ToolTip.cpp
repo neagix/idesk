@@ -127,9 +127,8 @@ Window XImlib2ToolTip::getWindow()
   return tooltip.window;
 }
 
-void XImlib2ToolTip::event_enter_notify ()
+void XImlib2ToolTip::draw_caption()
 {
-	if(captionTipOnHover && tipText.length() > 0){ 
 		int fX, fY;		 
 		setXY(fX, fY, width, height);
 		
@@ -140,6 +139,12 @@ void XImlib2ToolTip::event_enter_notify ()
 		XSetFillStyle(display, tooltip.gc, FillTiled);
 		XSetTile(display, tooltip.gc, pixmap);
 		XFillRectangle(display, pixmap, tooltip.gc, 0, 0, width, height);
+}
+
+void XImlib2ToolTip::event_enter_notify ()
+{
+	if(captionTipOnHover && tipText.length() > 0){
+		draw_caption();
 	}	
 }
 

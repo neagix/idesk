@@ -1,15 +1,15 @@
 table Config
-  FontName: gothic
-  FontSize: 11
-  FontColor: #37CFA6
-  ToolTip.FontSize: 11
-  ToolTip.FontName: gothic
+  FontName: Arial
+  FontSize: 10
+  FontColor: #000000
+  ToolTip.FontSize: 12
+  ToolTip.FontName: Arial
   ToolTip.ForeColor: #0000FF
   ToolTip.BackColor: #FFFFFF
   ToolTip.CaptionOnHover: true
-  ToolTip.CaptionPlacement: Right
+  ToolTip.CaptionPlacement: Bottom
   Locked: false
-  Transparency: 100
+  Transparency: 50
   Shadow: true
   ShadowColor: #000000
   ShadowX: 1
@@ -40,4 +40,3 @@ table Actions
   Execute[0]: left doubleClk
   Execute[1]: right doubleClk
 end
-

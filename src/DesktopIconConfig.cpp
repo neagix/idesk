@@ -2,6 +2,7 @@
  * 
  * Idesk -- DesktopIconConfig.cpp
  *
+ * Copyright (c) 2013 neagix
  * Copyright (c) 2002, Chris (nikon) (nikon@sc.rr.com)
  * All rights reserved.
  *
@@ -24,7 +25,7 @@
 
 #include "DesktopIconConfig.h"
 
-DesktopIconConfig::DesktopIconConfig(const string & fName, CommonOptions * parentData)
+DesktopIconConfig::DesktopIconConfig(const string & fName, Table &table, CommonOptions * parentData)
 {
     iconFilename = fName;
     
@@ -32,12 +33,9 @@ DesktopIconConfig::DesktopIconConfig(const string & fName, CommonOptions * paren
     
     common->setDefaultsFromParent(*parentData);
 
-    Database db(iconFilename);
-    Table table = db.Query("Icon");
-
-    if(!table.isValid())
-        cout << "No Icon table found in the config file!!\n";
-    else
+//    if(!table.isValid())
+//        cout << "No Icon table found in the config file!!\n";
+//    else
     { 
         common->setOptions(table); 
         setIconOptions(table);
@@ -80,7 +78,6 @@ void DesktopIconConfig::saveIcon(int xCord, int yCord)
         
         db.Write();
     }
-
 }
 
 string DesktopIconConfig::getExtension(const string & file)
