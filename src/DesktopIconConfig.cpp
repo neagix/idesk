@@ -24,6 +24,8 @@
  */
 
 #include "DesktopIconConfig.h"
+#include <string.h>
+#include <stdlib.h>
 
 DesktopIconConfig::DesktopIconConfig(const string & fName, Table &table, CommonOptions * parentData)
 {
@@ -51,6 +53,16 @@ void DesktopIconConfig::setIconOptions(Table table)
     pictureFilename = table.Query("Icon");
     picExtension = getExtension(pictureFilename);
     caption = table.Query("Caption");
+
+    // Albert - expand environment variable if caption
+    // is in the form "$VARIABLE"
+    if (caption.size() > 1 && caption[0] == '$') {
+      char *envalue = &caption[1];
+      if (envalue && strlen (envalue)) {
+	caption.assign (getenv(envalue));
+      }
+    }
+
     captionTip = table.Query("ToolTip.Caption");
     x = atoi(table.Query("X").c_str());
     y = atoi(table.Query("Y").c_str());
