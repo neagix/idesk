@@ -596,7 +596,7 @@ void XDesktopContainer::runCommand(const string & command)
 		     sn_launcher_context_setup_child_process (sn_context);
 #endif /* HAVE_STARTUP_NOTIFICATION  */
                 setsid();
-		if(execl("/bin/sh", "/bin/sh", "-c", command.c_str(), 0) == -1){
+		if(execl("/bin/sh", "/bin/sh", "-c", command.c_str(), (char *)0) == -1){
 			printf("Error to execute command %s\n", command.c_str());
 			exit(1);
 		}
