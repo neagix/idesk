@@ -26,25 +26,24 @@
 #include "Util.h"
 #include <sys/stat.h>
 
-//the initilizer list just sets the program defaults for non-necessary options
+// the initializer list just sets the program defaults for non-necessary options
 DesktopConfig::DesktopConfig(Database db, string ideskrcFile) :
                              AbstractConfig(ideskrcFile)
 {
+    wasLoaded = db.wasLoaded;
     common = new CommonOptions();
 
     Table table = db.Query("Config");
     
-    if ( !table.isValid())
+    if (!table.isValid())
     {
         cout << "Can't find config file or missing 'Config'"
              << " table in the config file.\n";
         _exit(1);
     }
 
-    //handle the configure options
+    // handle the configure options
     setOptions(table);
-    
-    //delete table;  //CommonOptions object will delete the table
     loadIcons();
 }
 
@@ -225,24 +224,27 @@ void DesktopConfig::loadIcons()
 {
     struct dirent **files;
     
-    string directory(getenv("HOME"));
+    string homeDirectory(getenv("HOME"));
     string filename;
 
-    Database db;
     Table table;
 
     int fileCount;
 
     DesktopIconConfig * iconPtr;
 
-    directory += "/.idesktop/";
+    string directory = homeDirectory + "/.config/idesktop/";
 
     fileCount = scandir(directory.c_str(), &files, 0, alphasort);
-    
     if (fileCount == -1)
     {
-        cout << "Error: you have to create the .idesktop dir on your HOME!!\n";
-        _exit (1);
+        cout << "No icons found in " << directory << " - trying legacy location ~/.idesktop\n";
+        directory = homeDirectory + "/.idesktop/";
+        fileCount = scandir(directory.c_str(), &files, 0, alphasort);
+        if (fileCount == -1) {
+            cout << "No icons found in " << directory << "\n";
+            return;
+        }
     }
 
     for(int i = 0; i < fileCount; i++)
@@ -253,7 +255,7 @@ void DesktopConfig::loadIcons()
             
             if (filename.size() > 4 && filename.substr(filename.size()-4,filename.size()) == ".lnk")
             {
-				db = Database(filename);
+				Database db = Database(filename, false);
 				table = db.Query("Icon");
 
 				if (table.isValid())
@@ -281,42 +283,31 @@ void DesktopConfig::loadIcons()
     free(files);
 }
 
-void DesktopConfig::loadDefaultIcons()
-{
-	string filename = string(DEFAULT_PREFIX) + "/share/" + string(PACKAGE) + "/default.lnk";
-	string ideskicon = getenv("HOME");
-	ideskicon += "/.idesktop/default.lnk";
-	Util::copy(filename,ideskicon);
-	
-	string iconname = string(DEFAULT_PREFIX) + "/share/" + string(PACKAGE) + "/folder_home.png";
-	
-	Database db(ideskicon);
-	Table table = db.Query("Icon");
-
-	DesktopIconConfig * iconPtr = new DesktopIconConfig(ideskicon, table, common); 
- 	iconConfigList.push_back(iconPtr);
-}
-
 void DesktopConfig::saveLockState(bool lockState)
 {
-    Database db = Database(ideskrcFile);
-    Table & table = db.Query("Config");
-    
-    if(table.isValid()) 
-    {
-        if (lockState)
-            table.Set("Locked", "true");
-        else
-            table.Set("Locked", "false");
-
-        db.Write();
-    }
-    else
-    {
-        cout << "Incorrect config file\n";
+    if (!wasLoaded) {
         return;
     }
 
+    Database db = Database(ideskrcFile, true);
+    Table & table = db.Query("Config");
+    
+    if (db.wasLoaded) {
+        if(table.isValid())
+        {
+            if (lockState)
+                table.Set("Locked", "true");
+            else
+                table.Set("Locked", "false");
+
+            db.Write();
+        }
+        else
+        {
+            cout << "Incorrect config file\n";
+            return;
+        }
+    }
 }
 
 bool DesktopConfig::backgroundFile(const string & filename)

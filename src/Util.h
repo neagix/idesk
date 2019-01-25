@@ -44,7 +44,7 @@ class Util
 	
 		ofstream ofs( target.c_str() );
 		if (!ofs) {
-			cout << "Cannot write file: " << target << "!! Exiting.\n";
+			cout << "Cannot write file: " << target << "! Exiting.\n";
 			_exit(1);
 		}
 	
@@ -52,7 +52,7 @@ class Util
 		ifs.open(source.c_str(),ios::in);
 	
 		if (!ifs.is_open()) {
-			cout << "Cannot read file: " << source << "!! Exiting.\n";
+			cout << "Cannot read file: " << source << "! Exiting.\n";
 			_exit(1);
 		}
 		while( ifs ) {

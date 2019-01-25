@@ -63,10 +63,10 @@ bool XIcon::createIcon()
 {
 	ifstream filein( iconConfig->getPictureFilename().c_str());
 	if (filein.fail()){
-		cout << "Can't load: " << iconConfig->getPictureFilename()
+		cout << "Cannot load: " << iconConfig->getPictureFilename()
 				<< " bailing -- "
 				<< iconConfig->getCaption() << endl
-				<< "Check to see if the image and path to image is valid\n"; 
+				<< "Check to see if the icon and path to icon are valid\n"; 
 		return false;
 	}	
 	

@@ -48,27 +48,39 @@ static inline std::string &trim(std::string &s) {
         return ltrim(rtrim(s));
 }
 
-Database::Database() : blankTable()
+Database::Database( string  F, bool fallbackToDefaultRc ) : blankTable()
 {
-    File = "";
-}
-
-Database::Database( string  F ) : blankTable()
-{
+    wasLoaded = false;
     ifstream DbFile;
-    DbFile.open(F.c_str(),ios::in);
+    DbFile.open(F.c_str(), ios::in);
     
     if (!DbFile.is_open()) {
-        cout << "Cannot read file: " << F << "\nTrying with default\n";
-	string defaults = string(DEFAULT_PREFIX) + "/share/" + string(PACKAGE) + "/dot.ideskrc";
-	Util::copy(defaults,F);
-	DbFile.clear();
-	DbFile.open(F.c_str(),ios::in);
-	if (!DbFile.is_open()) {
-		cout << "Cannot read default file: " << F << "\nExiting\n";
-		_exit(1);
-	}
-	
+        if (!fallbackToDefaultRc) {
+            cout << "Cannot read file: " << F << "\n";
+            _exit(1);
+        }
+
+        cout << "Cannot read file: " << F << "\nUsing embedded defaults\n";
+
+        //TODO: add all defaults here
+        {
+        Table & T = AddTable( "Config" );
+        T.Set("FontName", "Arial");
+        T.Set("FontSize", "10");
+        T.Set("FontColor", "#000000");
+        }
+
+        {
+        Table & T = AddTable( "Actions" );
+        T.Set("Lock", "control right doubleClk");
+        T.Set("Reload", "middle doubleClk");
+        T.Set("Drag", "left hold");
+        T.Set("EndDrag", "left singleClk");
+        T.SetArray("Execute", "left doubleClk", 0);
+        T.SetArray("Execute", "right doubleClk", 1);
+        }
+
+        return;
     }
 
     string Buffer, Line, temp;
@@ -133,7 +145,9 @@ Database::Database( string  F ) : blankTable()
         }
     }
     DbFile.close();
-   // print();
+    // print();
+
+    wasLoaded = true;
 }
 
 Database::~Database()

@@ -34,7 +34,7 @@
 class DesktopConfig : public AbstractConfig
 {
     protected:
-    bool isLocked;
+    bool isLocked, wasLoaded;
     int snapWidth, snapHeight;
     bool snapOn;
     bool startSnapLeft, startSnapTop;
@@ -99,8 +99,6 @@ class DesktopConfig : public AbstractConfig
 	
     virtual int getCursorOver() { return common->getCursorOver(); }
 		
-    virtual void loadDefaultIcons();
-
     virtual string getFont() { return common->getFont(); }
     virtual int getFontSize() { return common->getFontSize(); }
     virtual string getFontColor() { return common->getFontColor(); }

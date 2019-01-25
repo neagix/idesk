@@ -33,13 +33,8 @@ DesktopIconConfig::DesktopIconConfig(const string & fName, Table &table, CommonO
     
     common->setDefaultsFromParent(*parentData);
 
-//    if(!table.isValid())
-//        cout << "No Icon table found in the config file!!\n";
-//    else
-    { 
-        common->setOptions(table); 
-        setIconOptions(table);
-    }
+    common->setOptions(table);
+    setIconOptions(table);
 }
 
 DesktopIconConfig::~DesktopIconConfig()
@@ -68,7 +63,7 @@ void DesktopIconConfig::saveIcon(int xCord, int yCord)
     x = xCord;
     y = yCord;
 
-    Database db(iconFilename);
+    Database db(iconFilename, false);
     Table & table = db.Query("Icon");
     
     if(table.isValid())

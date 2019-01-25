@@ -27,7 +27,7 @@ table Config
   FillStyle: fillinvert
   Background.Delay: 0
   Background.Source: None
-  Background.File: None 
+  Background.File: None
   Background.Mode: Center 
   Background.Color: #C2CCFF
 end

@@ -54,8 +54,8 @@ bool Application::processArguments()
                  << "Default Prefix " << DEFAULT_PREFIX << endl << "==============\n" 
                  << "Further documentation available at:"
                  << " http://idesk.sourceforge.net\n"
-                 << "\nRemember to create your ~/.ideskrc file,"
-                 << " and put icons in the ~/.idesktop\ndirectory.\n";
+                 << "\nRemember to create your ~/.config/idesktop/ideskrc file,"
+                 << " and put .lnk icons in the ~/.config/idesktop\ndirectory.\n";
             returnBool = false;
         }
     }

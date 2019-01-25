@@ -87,7 +87,7 @@ void XDesktopContainer::initXWin()
     display = XOpenDisplay(NULL);
     
     if (!display){
-	 cout << "Display is null!!\n";
+	 cout << "Display is null!\n";
 	 _exit(1);
     }
     
@@ -135,21 +135,23 @@ void XDesktopContainer::getRootImage()
      }
 }
 
+inline bool fileExists (const std::string& name) {
+  struct stat buffer;   
+  return (stat (name.c_str(), &buffer) == 0); 
+}
+
 void XDesktopContainer::configure()
-{    
+{
     //get the user's config file
-    string ideskrcFile = getenv("HOME");
-    ideskrcFile += "/.ideskrc";
+    string homeDirectory = getenv("HOME");
+    string ideskrcFile = homeDirectory + "/.config/idesktop/ideskrc";
+    if (!fileExists(ideskrcFile))
+        ideskrcFile = homeDirectory + "/.ideskrc";
 
-    Database db(ideskrcFile);
-    config = new DesktopConfig(db, ideskrcFile);
+    Database db(ideskrcFile, true);
+    DesktopConfig * dConfig = new DesktopConfig(db, ideskrcFile);
+    config = dConfig;
     
-    DesktopConfig * dConfig = dynamic_cast<DesktopConfig *>(config);
-    
-    if(config->numIcons() == 0){
-	    dConfig->loadDefaultIcons();
-    }
-
     locked = dConfig->getLocked();
     clickDelay = dConfig->getClickSpeed();
 
@@ -167,32 +169,27 @@ void XDesktopContainer::loadIcons()
 
     if (config->numIcons() == 0)
     {
-        cout << "No icons loaded!! .idesktop is empty or contains invalid icons\n";
-        _exit(1);
+        return;
     }
-    else
-    {
-        //iterate through all the icons created by the configure class
-        for(iconPtr = config->start(); config->notFinished();
-            iconPtr = config->nextIcon())
-        {
-            DesktopIconConfig * dIconConfig =
-                dynamic_cast<DesktopIconConfig *>(iconPtr);
 
-            XIcon * icon;
-            if (dIconConfig->getSnapShadow() && dIconConfig->getSnapShadow()){
-                icon = new XIconWithShadow(this, config, iconPtr);
-	    }
-            else{
-                icon = new XIcon(this, config, iconPtr);
-		
-	}
-	if (icon->isValid()){
-		if(icon->createIcon()){
-	    		   addIcon(icon);
+    // iterate through all the icons created by the configure class
+    for(iconPtr = config->start(); config->notFinished();
+        iconPtr = config->nextIcon()) {
+        DesktopIconConfig * dIconConfig = dynamic_cast<DesktopIconConfig *>(iconPtr);
+
+        XIcon * icon;
+        if (dIconConfig->getSnapShadow() && dIconConfig->getSnapShadow()) {
+            icon = new XIconWithShadow(this, config, iconPtr);
+	    } else {
+            icon = new XIcon(this, config, iconPtr);
 		}
-	}
-      }
+	    if (icon->isValid()){
+		    if (icon->createIcon()) {
+	    	   addIcon(icon);
+		    } else {
+                _exit(1);
+            }
+	    }
     }
 }
 
@@ -203,8 +200,7 @@ void XDesktopContainer::arrangeIcons()
 
     if( iconList.size() == 0 )
     {
-        cout << "No Icons! Quitting.\n";
-        _exit(1);
+        return;
     }
 
     for(unsigned int i = 0; i < iconList.size(); i++ )

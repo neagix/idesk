@@ -105,7 +105,7 @@ void XImlib2Caption::createFont()
     
     XColor  screen, exact;
     if (!XAllocNamedColor (xContainer->getDisplay(), cmap, (char*)dIconConfig->getFontColor().c_str(), &screen, &exact))
-        cout << "BAD COLORS!!!\n";
+        cout << "BAD COLORS!\n";
     
     XftColorAllocName(xContainer->getDisplay(), visual, cmap,
                       (char*)dIconConfig->getFontColor().c_str(), &fontColor );

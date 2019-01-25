@@ -69,12 +69,12 @@ class Database
         Table blankTable;
 
     public:
-        Database();
-        Database( string F );
+        Database( string F, bool fallbackToDefaultRc );
         ~Database();
 
         void print();
 
+        bool wasLoaded;
         vector<Table> Tables;
         Table & AddTable( const string & Title );
         Table & Query( const string & Title );

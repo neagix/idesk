@@ -1,10 +1,9 @@
 table Icon
   Caption: Idesk
-  Command: /usr/bin/Xdialog --msgbox "IDESK -- Icon Desktop Manager \n\n\n by FixXxeR \n\n\n 2005" 15 30 
+  Command: zenity --info --text "IDESK -- Icon Desktop Manager"
   Icon: /usr/local/share/idesk/folder_home.xpm
   Width: 48
   Height: 48
   X: 30
   Y: 30
 end
-

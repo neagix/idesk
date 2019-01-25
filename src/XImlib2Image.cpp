@@ -104,10 +104,10 @@ void XImlib2Image::createPicture()
 	}    
 	else
 	{
-		cout << "Can't load: " << dIconConfig->getPictureFilename()
+		cout << "Cannot load: " << dIconConfig->getPictureFilename()
 				<< " bailing -- "
 				<< dIconConfig->getCaption() << endl
-				<< "Check to see if the image and path to image is valid\n";
+				<< "Check to see if the image and path to image are valid\n";
 	}
 	
 }
