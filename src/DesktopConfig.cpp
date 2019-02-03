@@ -224,43 +224,41 @@ void DesktopConfig::loadIcons()
 {
     struct dirent **files;
     
+    // see https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+    string xdgConfigHome(getenv("XDG_CONFIG_HOME"));
     string homeDirectory(getenv("HOME"));
-    string filename;
+    if (xdgConfigHome.empty()) {
+        xdgConfigHome = homeDirectory + "/.config";
+    }
 
-    Table table;
+    string idesktopDir = xdgConfigHome + "/idesktop/";
 
-    int fileCount;
-
-    DesktopIconConfig * iconPtr;
-
-    string directory = homeDirectory + "/.config/idesktop/";
-
-    fileCount = scandir(directory.c_str(), &files, 0, alphasort);
+    int fileCount = scandir(idesktopDir.c_str(), &files, 0, alphasort);
     if (fileCount == -1)
     {
-        cout << "No icons found in " << directory << " - trying legacy location ~/.idesktop\n";
-        directory = homeDirectory + "/.idesktop/";
-        fileCount = scandir(directory.c_str(), &files, 0, alphasort);
+        cout << "No icons found in " << idesktopDir << " - trying legacy location ~/.idesktop\n";
+        idesktopDir = homeDirectory + "/.idesktop/";
+        fileCount = scandir(idesktopDir.c_str(), &files, 0, alphasort);
         if (fileCount == -1) {
-            cout << "No icons found in " << directory << "\n";
+            cout << "No icons found in " << idesktopDir << "\n";
             return;
         }
     }
 
     for(int i = 0; i < fileCount; i++)
     {
-        if ( !backgroundFile(files[i]->d_name))
+        if (!backgroundFile(files[i]->d_name))
         {
-            filename = directory + files[i]->d_name;
+            string filename = idesktopDir + files[i]->d_name;
             
             if (filename.size() > 4 && filename.substr(filename.size()-4,filename.size()) == ".lnk")
             {
 				Database db = Database(filename, false);
-				table = db.Query("Icon");
+				Table table = db.Query("Icon");
 
 				if (table.isValid())
 				{   
-					iconPtr = new DesktopIconConfig(filename, table, common); 
+					DesktopIconConfig *iconPtr = new DesktopIconConfig(filename, table, common); 
 					iconConfigList.push_back(iconPtr);
 				} else
 					cout << "Error: \"" << files[i]->d_name << "\" is not a valid .lnk desktop icon\n";

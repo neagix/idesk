@@ -1,13 +1,11 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+/src/*.o
+/src/idesk
+/stamp-h
+/Makefile
+/src/Makefile
+/autom4te\.cache/
+/config\.h*
+/config\.log
+/config\.status
+/src/\.deps/
+/src/defaults\.h
