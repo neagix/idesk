@@ -586,7 +586,7 @@ void XDesktopContainer::runCommand(const string & command)
 {
      pid_t pid;   
     //fork and execute program
-    if (pid=fork() != 0) { //Primer proceso hijo
+    if (pid=fork() == 0) { //Primer proceso hijo
 #ifdef HAVE_STARTUP_NOTIFICATION
 	    if (sn_context != NULL)
 		     sn_launcher_context_setup_child_process (sn_context);
