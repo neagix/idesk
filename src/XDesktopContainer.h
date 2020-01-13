@@ -26,6 +26,7 @@
 #define XDESKTOP_CONTAINER_CLASS
 
 #include <sys/wait.h>
+#include <errno.h>
 #ifdef HAVE_STARTUP_NOTIFICATION
 #include <libsn/sn.h>
 #include <assert.h>
