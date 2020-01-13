@@ -10,9 +10,13 @@ NOTE: No more SVG support. For porting to Imlib2 the SVG was remove.
 Dependencies
 ------------
 
--xft-config   //For Xlib anf X11 support (default)
--imlib2-config //For Imlib2 stuff (default)
--pkg-config    //For libstartup-notification-1.0
+- xft-config   //For Xlib anf X11 support (default)
+- imlib2-config //For Imlib2 stuff (default)
+- pkg-config    //For libstartup-notification-1.0
+
+Debian/Ubuntu packages:
+- libstartup-notification0-dev
+- libimlib2-dev
 
 
 Installation

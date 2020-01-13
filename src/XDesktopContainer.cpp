@@ -584,21 +584,25 @@ void XDesktopContainer::reloadState()
 
 void XDesktopContainer::runCommand(const string & command)
 {
-     pid_t pid;   
-    //fork and execute program
-    if (pid=fork() == 0) { //Primer proceso hijo
+    pid_t pid;
+    // fork and execute program by replacing child's process
+    pid = fork();
+    if (pid == 0) {
 #ifdef HAVE_STARTUP_NOTIFICATION
 	    if (sn_context != NULL)
 		     sn_launcher_context_setup_child_process (sn_context);
 #endif /* HAVE_STARTUP_NOTIFICATION  */
                 setsid();
-		if(execl("/bin/sh", "/bin/sh", "-c", command.c_str(), (char *)0) == -1){
-			printf("Error to execute command %s\n", command.c_str());
+		if (execl("/bin/sh", "/bin/sh", "-c", command.c_str(), (char *)0) == -1) {
+			fprintf(stderr, "Error to execute command '%s': %s\n", command.c_str(), strerror(errno));
 			exit(1);
 		}
-		exit(0); //exit fork
+		// this line is never reached
+    } else if (pid < 0) {
+        fprintf(stderr, "Failed to fork process to run command '%s': %s\n", command.c_str(), strerror(errno));
+    } else {
+        waitpid(pid, NULL, 0);
     }
-    waitpid(pid, NULL, 0);
 }
 int XDesktopContainer::widthOfScreen()
 {
