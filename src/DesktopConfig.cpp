@@ -223,10 +223,21 @@ void DesktopConfig::setDesktopOnlyOptions(Table table)
 void DesktopConfig::loadIcons()
 {
     struct dirent **files;
-    
+    char * tmp;
+    string xdgConfigHome;
+    string homeDirectory;
+
     // see https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-    string xdgConfigHome(getenv("XDG_CONFIG_HOME"));
-    string homeDirectory(getenv("HOME"));
+    tmp = getenv("XDG_CONFIG_HOME");
+    if (tmp) {
+        xdgConfigHome.assign(tmp);
+    }
+
+    tmp = getenv("HOME");
+    if (tmp) {
+        homeDirectory.assign(tmp);
+    }
+
     if (xdgConfigHome.empty()) {
         xdgConfigHome = homeDirectory + "/.config";
     }
