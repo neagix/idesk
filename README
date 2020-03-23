@@ -5,7 +5,7 @@ Idesk is program that draws desktop icons. Each icon will execute a shell comman
 
 The icons can either be PNG (.png) or SVG (.svg) files. There are some problems with librsvg's usage of some svg files it seems. Some advanced SVG files _cannot_ be loaded by librsvg. More investigation is needed to see what kind of SVG's work. See note in section 6.
 
-NOTE: No more SVG support. For porting to Imlib2 the SVG was remove.
+NOTE: No more SVG support, it was removed while porting idesk to Imlib2
 
 Dependencies
 ------------

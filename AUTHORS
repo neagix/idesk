@@ -15,13 +15,17 @@ Former developers and other contributions
     Bryn (curious) (curious@ihug.com.au):
         Done some work on iDesk in the past, but he's back to help out some more now.
     scottanious
-        Gave me a perlGtk configuration script for iDesk. Its pretty cool and he or I will eventually extend it some. Available in downloads. 
+        Gave me a perlGtk configuration script for iDesk. It's pretty cool and he or I will eventually extend it some. Available in downloads. 
 
 
-Patch submitters
-	Kaneda <kaneda@bohater.net>
+Patch submitters and beta testers
+	Kaneda <kaneda bohater.net>
 	 Beta Tester.
-	Rene De La Garza <rene.delagarza@gmail.com>
+	Rene De La Garza <rene.delagarza gmail.com>
 	 Some bug fixes.
+	Chiristopher Morris <cmorri9 lsu.edu>
+	NRM <nrm dashbox.com.ar>
+	John R Lenton <john grulic.org.ar>
+	Phil <phil pheelay.com>
 
 Idesk is released under the BSD license, which means don't call my code yours, and if you use any of my code, give me credit.
