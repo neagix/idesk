@@ -101,7 +101,7 @@ void XImlib2Caption::createFont()
                         XftTypeDouble,
                         (double)dIconConfig->getFontSize(), 
                         XFT_WEIGHT, XftTypeInteger, boldVal,
-                        NULL );
+                        (void *)NULL );
     
     XColor  screen, exact;
     if (!XAllocNamedColor (xContainer->getDisplay(), cmap, (char*)dIconConfig->getFontColor().c_str(), &screen, &exact))
