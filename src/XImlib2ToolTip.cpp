@@ -109,7 +109,7 @@ void XImlib2ToolTip::createFont()
 		 XftTypeDouble,
 		 (double)dConfig->getFontSizeTip(), 
 		 XFT_WEIGHT, XftTypeInteger, XFT_WEIGHT_MEDIUM,
-		 NULL );
+		 (void *)NULL );
 
     XftTextExtentsUtf8(display, tooltip.font, (XftChar8*)tipText.c_str(), tipText.length(), &fontInfo );
     
