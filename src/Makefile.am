@@ -1,4 +1,5 @@
-# src/Makefile.am for Idesk 0.7.2
+# src/Makefile.am for Idesk 0.7.8
+# Copyright (c) 2017~2021 neagix
 # Copyright (c) 2005 FixXxeR (avelar at gmail.com)
 #
 # Permission is hereby granted, free of charge, to any person obtaining a

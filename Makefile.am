@@ -1,4 +1,4 @@
-# Makefile.am for Idesk 0.7.2 
+# Makefile.am for Idesk 0.7.8
 
 SUBDIRS = src
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in stamp-h.in src/default.h
@@ -11,7 +11,7 @@ INSTALL \
 README \
 TODO \
 ChangeLog \
-NEWS 
+NEWS
 
 install-data-local:
 	@$(NORMAL_INSTALL)
@@ -23,7 +23,7 @@ install-data-local:
 	      $(INSTALL_DATA) $$example $(DESTDIR)$(pkgdatadir); \
  	    fi \
 	  done \
-	fi 
+	fi
 
 dist-hook:
 	  if test -d examples; then \

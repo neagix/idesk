@@ -1,3 +1,16 @@
+Version 0.7.8 - 23 December 2021 by neagix
+---------------------------
+* prevent out of bounds error by checking index
+* fix Idesk not starting without XDG_CONFIG_HOME set
+* fix runCommand forking behaviour
+* respect XDG_CONFIG_HOME according to XDG Base Directory Specification
+* use standardized locations for configuration
+* fix compilation warning
+* re-introduce SVG support via librsvg
+* do not fail starting idesk if an icon file is invalid or cannot be loaded
+* use stderr for messages
+
+
 Version 0.7.7 - 23 June 2013 by neagix
 ---------------------------
 * always trim icon field values

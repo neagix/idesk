@@ -9,3 +9,6 @@
 /config\.status
 /src/\.deps/
 /src/defaults\.h
+/compile
+/depcomp
+/stamp-h1
