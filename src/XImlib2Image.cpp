@@ -74,10 +74,80 @@ void XImlib2Image::configure()
     depth =  DefaultDepth(display,screen);
 }
 
+#ifdef HAVE_SVG
+void XImlib2Image::createPictureFromSvg()
+{
+    DesktopIconConfig * dIconConfig =
+        dynamic_cast<DesktopIconConfig *>(iconConfig);
+
+    GError * gErr;
+    // load SVG file and scale it to the icon size
+    vectorPixbuf = gdk_pixbuf_new_from_file_at_size(dIconConfig->getPictureFilename().c_str(),
+                                                 width, height, &gErr);
+    if (!vectorPixbuf)
+    {   
+        cout << "librsvg error: "<< gErr->message << endl;
+        return;
+    }
+
+    hasAlpha = gdk_pixbuf_get_has_alpha(vectorPixbuf);
+    /*
+    rgb = (unsigned char *)malloc( width * height * 3 );
+    alpha = (unsigned char *)malloc( width * height );
+    alpha2 = (unsigned char *)malloc( width * height );
+    */
+    rgb = new unsigned char[width * height * 3];
+    alpha = new unsigned char[width * height];
+    alpha2 = new unsigned char[width * height];
+
+    unsigned char r, g, b, a;
+    unsigned char * origPixbufRgb = gdk_pixbuf_get_pixels(vectorPixbuf);
+    unsigned char * rgbPtr = rgb;
+    unsigned char * aPtr = alpha;
+    unsigned char * aPtr2 = alpha2;
+    unsigned char * pixbufRgb = origPixbufRgb;
+    
+    for(int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            r = *pixbufRgb++;
+            g = *pixbufRgb++;
+            b = *pixbufRgb++;
+            a = *pixbufRgb++;
+
+            *rgbPtr++ = r;
+            *rgbPtr++ = g;
+            *rgbPtr++ = b;
+            
+            // Transparency matrix.
+            if( ( a - transparency ) < 0 )
+            {
+                *aPtr++ = 0;
+                *aPtr2++ = a;
+            }
+            else 
+            {
+                *aPtr++ = a - transparency;
+                *aPtr2++ = a;
+            }
+        }
+    }
+
+    image = imlib_create_image_using_data(width, height, (unsigned int *)origPixbufRgb);
+}
+#endif
+
 void XImlib2Image::createPicture()
 {
 	DesktopIconConfig * dIconConfig =
 			dynamic_cast<DesktopIconConfig *>(iconConfig);
+#ifdef HAVE_SVG
+    if (dIconConfig->isSvg()) {
+        createPictureFromSvg();
+        return;
+    }
+#endif
 	
 	image = imlib_load_image(dIconConfig->getPictureFilename().c_str());
 
@@ -92,16 +162,18 @@ void XImlib2Image::createPicture()
 			width = imlib_image_get_width();
 		if (height == 0)
 			height= imlib_image_get_height();
-		
-		Imlib_Image tempImg = imlib_create_cropped_scaled_image(0, 0,
-				orgWidth, orgHeight, width, height);
 
-		imlib_free_image();
+        if ((orgWidth != width) || (orgHeight != height)) {
+            Imlib_Image tempImg = imlib_create_cropped_scaled_image(0, 0,
+                    orgWidth, orgHeight, width, height);
 
-		image = tempImg;
+            imlib_free_image();
+
+            image = tempImg;
+        }
         
 		hasAlpha = true; //TODO add checks here
-	}    
+	}
 	else
 	{
 		cout << "Cannot load: " << dIconConfig->getPictureFilename()

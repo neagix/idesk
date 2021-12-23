@@ -42,12 +42,16 @@ XIcon::XIcon(AbstractContainer * cont, AbstractConfig * con,
 
     dragged = dragging = false;
 
-    if (dIcon->isRaster())
+    if (dIcon->isRaster()
+#ifdef HAVE_SVG
+    || dIcon->isSvg()
+#endif
+    )
         image = new XImlib2Image(cont, this, config, iconConfig);
     else
     {
-	cout << "Unknown file format: " << iconConfig->getPictureFilename() << "\n" << endl;
-	valid = false;
+        cout << "Unknown file format: " << iconConfig->getPictureFilename() << "\n" << endl;
+        valid = false;
         // implement way to skip icon and not segfault
     }
 }

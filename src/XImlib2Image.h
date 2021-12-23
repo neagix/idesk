@@ -32,6 +32,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <Imlib2.h>
+#ifdef HAVE_SVG
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#endif
 
 class XImlib2Image : public AbstractImage
 {
@@ -104,6 +107,12 @@ class XImlib2Image : public AbstractImage
 	virtual void unpressImage();
 	void event_enter_notify ();
 	void event_leave_notify ();
+#ifdef HAVE_SVG
+    private:
+        void createPictureFromSvg();
+        // used with SVG files; reference-counted
+        GdkPixbuf *vectorPixbuf;
+#endif
 };
 
 #endif

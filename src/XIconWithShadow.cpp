@@ -34,13 +34,17 @@ XIconWithShadow::XIconWithShadow(AbstractContainer * cont, AbstractConfig * con,
     
     valid = true;
 
-    if (dIcon->isRaster())
+    if (dIcon->isRaster()
+#ifdef HAVE_SVG
+    || dIcon->isSvg()
+#endif
+    )
         shadowImage = new XImlib2Shadow(cont, this, config, iconConfig);
     else
     {
-	cout << "Unknown file format:"  << iconConfig->getPictureFilename() << "\n" << endl;
+	    cout << "Unknown file format:"  << iconConfig->getPictureFilename() << "\n" << endl;
         // implement way to skip icon and not segfault
-	valid = false;
+	    valid = false;
     }
 }
 

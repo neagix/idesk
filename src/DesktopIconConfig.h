@@ -121,7 +121,6 @@ class DesktopIconConfig : public AbstractIconConfig
 	                                      picExtension == "JPG"  ||
                                           picExtension == "TIFF" ||
                                           picExtension == "PNG"); }
-        virtual bool isXpm() { return picExtension == "XPM"; }
 
         virtual void saveIcon(int xCord, int yCord);
 

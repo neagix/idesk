@@ -53,7 +53,7 @@ idesk_SOURCES =  XDesktopContainer.h  XDesktopContainer.cpp \
 		 App.h App.cpp \
 		 XImlib2Caption.h XImlib2Caption.cpp \
 		 Timer.h Timer.cpp \
-		 Main.h Main.cpp \
+		 Main.cpp \
 		 cursors.h
 
 uninstall-local:
