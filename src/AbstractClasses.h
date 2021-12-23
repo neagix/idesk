@@ -283,8 +283,7 @@ class AbstractConfig
         virtual int getNumIcons() { return iconConfigList.size(); }
         virtual AbstractIconConfig * nextIcon()
         {
-            // TODO - use try and catch here to grab out-of-bounds errors
-            return iconConfigList[++iterCtr];
+            return ++iterCtr < iconConfigList.size() ? iconConfigList[iterCtr] : NULL;
         }
         virtual bool notFinished() { return iterCtr < iconConfigList.size(); }
 
