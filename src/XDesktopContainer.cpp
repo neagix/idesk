@@ -87,7 +87,7 @@ void XDesktopContainer::initXWin()
     display = XOpenDisplay(NULL);
     
     if (!display){
-	 cout << "Display is null!\n";
+	 cerr << "Display is null!\n";
 	 _exit(1);
     }
     
@@ -97,7 +97,7 @@ void XDesktopContainer::initXWin()
      
      XTextProperty prop;
      Atom start = XInternAtom(display,"_IDESK_START", false);
-     cout << "[Idesk] Starting on display " <<  name << endl;
+     cerr << "[Idesk] Starting on display " <<  name << endl;
      prop.value = (unsigned char *)name;
      prop.encoding = XA_STRING;
      prop.format = 8;
@@ -184,11 +184,8 @@ void XDesktopContainer::loadIcons()
             icon = new XIcon(this, config, iconPtr);
 		}
 	    if (icon->isValid()){
-		    if (icon->createIcon()) {
-	    	   addIcon(icon);
-		    } else {
-                _exit(1);
-            }
+		    if (icon->createIcon())
+	    	    addIcon(icon);
 	    }
     }
 }
@@ -341,8 +338,8 @@ void XDesktopContainer::parseNonIconEvents()
 				string mesg = (char *)prop.value;
 				if(current_display_name == old_display_name){
 					XDeleteProperty (display, rootWindow, atom_stop);
-					cout << "Error ... Idesk is running in " << prop.value << endl;
-					cout << "Exit." << endl;
+					cerr << "Error ... Idesk is running in " << prop.value << endl;
+					cerr << "Exit." << endl;
 					_exit(1);
 				}
 			}

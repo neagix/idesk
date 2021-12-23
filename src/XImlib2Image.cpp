@@ -75,19 +75,20 @@ void XImlib2Image::configure()
 }
 
 #ifdef HAVE_SVG
-void XImlib2Image::createPictureFromSvg()
+bool XImlib2Image::createPictureFromSvg()
 {
     DesktopIconConfig * dIconConfig =
         dynamic_cast<DesktopIconConfig *>(iconConfig);
 
-    GError * gErr;
+    GError * gErr = nullptr;
     // load SVG file and scale it to the icon size
     vectorPixbuf = gdk_pixbuf_new_from_file_at_size(dIconConfig->getPictureFilename().c_str(),
                                                  width, height, &gErr);
     if (!vectorPixbuf)
     {   
-        cout << "librsvg error: "<< gErr->message << endl;
-        return;
+        cerr << "librsvg error: " << gErr->message << endl;
+        g_clear_error (&gErr);
+        return false;
     }
 
     hasAlpha = gdk_pixbuf_get_has_alpha(vectorPixbuf);
@@ -135,17 +136,23 @@ void XImlib2Image::createPictureFromSvg()
     }
 
     image = imlib_create_image_using_data(width, height, (unsigned int *)origPixbufRgb);
+
+    if (!image) {
+        cerr << "Cannot create image from SVG pixbuf data" << endl;
+        return false;
+    }
+
+    return true;
 }
 #endif
 
-void XImlib2Image::createPicture()
+bool XImlib2Image::createPicture()
 {
 	DesktopIconConfig * dIconConfig =
 			dynamic_cast<DesktopIconConfig *>(iconConfig);
 #ifdef HAVE_SVG
     if (dIconConfig->isSvg()) {
-        createPictureFromSvg();
-        return;
+        return createPictureFromSvg();
     }
 #endif
 	
@@ -170,18 +177,19 @@ void XImlib2Image::createPicture()
             imlib_free_image();
 
             image = tempImg;
+            imlib_context_set_image(image);
         }
         
-		hasAlpha = true; //TODO add checks here
+        if (imlib_image_has_alpha() == 1)
+            hasAlpha = true;
+        else
+            hasAlpha = false;
+        return true;
 	}
-	else
-	{
-		cout << "Cannot load: " << dIconConfig->getPictureFilename()
-				<< " bailing -- "
-				<< dIconConfig->getCaption() << endl
-				<< "Check to see if the image and path to image are valid\n";
-	}
-	
+
+	cerr << "Cannot load: " << dIconConfig->getPictureFilename() << endl
+			<< "Check to see if the image and path to image are valid\n";
+    return false;
 }
 
 Window * XImlib2Image::getWindow()
@@ -189,9 +197,10 @@ Window * XImlib2Image::getWindow()
     return &window;
 }
 
-void XImlib2Image::createWindow()
+bool XImlib2Image::createWindow()
 {	
-    createPicture();
+    if (!createPicture())
+        return false;
 
     DesktopConfig * dConfig =
 		    dynamic_cast<DesktopConfig *>(config);
@@ -227,6 +236,8 @@ void XImlib2Image::createWindow()
 			    CWSaveUnder|CWBackPixmap|CWBackingStore|CWOverrideRedirect|CWEventMask| CWCursor,
                             &attr );  
     shapeWindow();
+
+    return true;
 }
 
 void XImlib2Image::createToolTip()
@@ -281,7 +292,6 @@ void XImlib2Image::setupLayer() {
 
 void XImlib2Image::shapeWindow()
 {
-	
      XDesktopContainer * xContainer = dynamic_cast<XDesktopContainer *>(container);
      
     //Shape the window to the icon

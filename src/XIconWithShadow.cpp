@@ -38,13 +38,22 @@ XIconWithShadow::XIconWithShadow(AbstractContainer * cont, AbstractConfig * con,
 #ifdef HAVE_SVG
     || dIcon->isSvg()
 #endif
-    )
-        shadowImage = new XImlib2Shadow(cont, this, config, iconConfig);
-    else
+    ) {
+        ifstream filein( iconConfig->getPictureFilename().c_str());
+        if (filein.fail()){
+            cerr << "Cannot load: '" << iconConfig->getPictureFilename() << "'" << endl
+                 << "Check to see if the icon and path to icon are valid\n";
+            valid = false;
+        } else
+        {
+            filein.close();
+            shadowImage = new XImlib2Shadow(cont, this, config, iconConfig);
+        }
+    } else
     {
-	    cout << "Unknown file format:"  << iconConfig->getPictureFilename() << "\n" << endl;
-        // implement way to skip icon and not segfault
+	    cerr << "Unknown file format: "  << iconConfig->getPictureFilename() << "\n" << endl;
 	    valid = false;
+        //TODO: implement way to skip icon and not segfault using the 'valid' value
     }
 }
 
@@ -55,16 +64,19 @@ XIconWithShadow::~XIconWithShadow()
 
 bool XIconWithShadow::createIcon()
 {
-	if(!XIcon::createIcon()) return false;
+	if (!XIcon::createIcon())
+        return false;
 	
 	XImlib2Shadow * sImage = dynamic_cast<XImlib2Shadow *>(shadowImage);
 
 	shadowVisible = false;
 	sImage->configure();
-	sImage->createWindow();
+	if (!sImage->createWindow())
+        return false;
 	sImage->initalize();
 	sImage->lowerWindow();
-	return true;
+
+    return true;
 }
 
 void XIconWithShadow::dragMotionNotify(XEvent ev)

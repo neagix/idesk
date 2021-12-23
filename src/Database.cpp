@@ -56,11 +56,11 @@ Database::Database( string  F, bool fallbackToDefaultRc ) : blankTable()
     
     if (!DbFile.is_open()) {
         if (!fallbackToDefaultRc) {
-            cout << "Cannot read file: " << F << "\n";
+            cerr << "Cannot read file: " << F << "\n";
             _exit(1);
         }
 
-        cout << "Cannot read file: " << F << "\nUsing embedded defaults\n";
+        cerr << "Cannot read file: " << F << "\nUsing embedded defaults\n";
 
         //TODO: add all defaults here
         {
@@ -185,7 +185,7 @@ void Database::Write(const string file)
 void Database::Write( ) {
     ofstream DbFile( File.c_str() );
     if (!DbFile) {
-        cout << "Cannot write file: " << File << "\nExiting\n";
+        cerr << "Cannot write file: " << File << "\nExiting\n";
         _exit(1);
     }
 
@@ -216,10 +216,10 @@ Table::Table( const string & T ) {
 
 void Table::print()
 {
-    cout << "Table: " << Title << endl;
+    cerr << "Table: " << Title << endl;
     for (int i=0; i < Label.size(); i++)
-        cout << "  " << Label[i] << ": " << Value[i] << endl;
-    cout << "End Table\n";
+        cerr << "  " << Label[i] << ": " << Value[i] << endl;
+    cerr << "End Table\n";
 
 }
 

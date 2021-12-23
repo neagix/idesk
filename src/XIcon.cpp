@@ -46,13 +46,23 @@ XIcon::XIcon(AbstractContainer * cont, AbstractConfig * con,
 #ifdef HAVE_SVG
     || dIcon->isSvg()
 #endif
-    )
-        image = new XImlib2Image(cont, this, config, iconConfig);
+    ) {
+        ifstream filein( iconConfig->getPictureFilename().c_str());
+        if (filein.fail()){
+            cerr << "Cannot load: '" << iconConfig->getPictureFilename() << "'" << endl
+                 << "Check to see if the icon and path to icon are valid\n";
+            valid = false;
+        } else
+        {
+            filein.close();
+            image = new XImlib2Image(cont, this, config, iconConfig);
+        }
+    }
     else
     {
-        cout << "Unknown file format: " << iconConfig->getPictureFilename() << "\n" << endl;
+        cerr << "Unknown file format: " << iconConfig->getPictureFilename() << "\n" << endl;
         valid = false;
-        // implement way to skip icon and not segfault
+        //TODO: implement way to skip icon and not segfault using the 'valid' value
     }
 }
 
@@ -65,20 +75,12 @@ XIcon::~XIcon()
 
 bool XIcon::createIcon()
 {
-	ifstream filein( iconConfig->getPictureFilename().c_str());
-	if (filein.fail()){
-		cout << "Cannot load: " << iconConfig->getPictureFilename()
-				<< " bailing -- "
-				<< iconConfig->getCaption() << endl
-				<< "Check to see if the icon and path to icon are valid\n"; 
-		return false;
-	}	
-	
 	XImlib2Image * xImage = dynamic_cast<XImlib2Image *>(image);
 	
 	xImage->configure();
-	xImage->createWindow();
-        xImage->createToolTip();
+	if (!xImage->createWindow())
+        return false;
+    xImage->createToolTip();
 	xImage->setupLayer();
 	xImage->initalize();
 	xImage->lowerWindow();	
@@ -91,10 +93,11 @@ bool XIcon::createIcon()
 		caption = new XImlib2Caption(container, this, config, iconConfig);
 		XImlib2Caption * xCaption = dynamic_cast<XImlib2Caption *>(caption);
 		xCaption->createWindow();
-                xCaption->renderFont2Imlib();
+        xCaption->renderFont2Imlib();
 		xCaption->lowerWindow();
 	}
-	return true;
+
+    return true;
 }
 
 void XIcon::lowerIcon()

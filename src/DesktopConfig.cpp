@@ -37,7 +37,7 @@ DesktopConfig::DesktopConfig(Database db, string ideskrcFile) :
     
     if (!table.isValid())
     {
-        cout << "Can't find config file or missing 'Config'"
+        cerr << "Can't find config file or missing 'Config'"
              << " table in the config file.\n";
         _exit(1);
     }
@@ -247,11 +247,11 @@ void DesktopConfig::loadIcons()
     int fileCount = scandir(idesktopDir.c_str(), &files, 0, alphasort);
     if (fileCount == -1)
     {
-        cout << "No icons found in " << idesktopDir << " - trying legacy location ~/.idesktop\n";
+        cerr << "No icons found in " << idesktopDir << " - trying legacy location ~/.idesktop\n";
         idesktopDir = homeDirectory + "/.idesktop/";
         fileCount = scandir(idesktopDir.c_str(), &files, 0, alphasort);
         if (fileCount == -1) {
-            cout << "No icons found in " << idesktopDir << "\n";
+            cerr << "No icons found in " << idesktopDir << "\n";
             return;
         }
     }
@@ -272,7 +272,7 @@ void DesktopConfig::loadIcons()
 					DesktopIconConfig *iconPtr = new DesktopIconConfig(filename, table, common); 
 					iconConfigList.push_back(iconPtr);
 				} else
-					cout << "Error: \"" << files[i]->d_name << "\" is not a valid .lnk desktop icon\n";
+					cerr << "Error: \"" << files[i]->d_name << "\" is not a valid .lnk desktop icon\n";
 			} else if (filename.size() > 8 && filename.substr(filename.size()-8,filename.size()) == ".desktop")
 			{
 /*				FreeDesktopIcon fdi(filename);
@@ -282,9 +282,9 @@ void DesktopConfig::loadIcons()
 					iconPtr = new DesktopIconConfig(filename, fdi, common); 
 					iconConfigList.push_back(iconPtr);
 				} else */
-					cout << "Error: \"" << files[i]->d_name << "\" is not a valid .desktop desktop icon\n";
+					cerr << "Error: \"" << files[i]->d_name << "\" is not a valid .desktop desktop icon\n";
 			} else
-				cout << "Warning: \"" << files[i]->d_name << "\" is not a recognized desktop icon (.lnk or .desktop)\n";
+				cerr << "Warning: \"" << files[i]->d_name << "\" is not a recognized desktop icon (.lnk or .desktop)\n";
 
             free(files[i]);
         }
@@ -313,7 +313,7 @@ void DesktopConfig::saveLockState(bool lockState)
         }
         else
         {
-            cout << "Incorrect config file\n";
+            cerr << "Incorrect config file\n";
             return;
         }
     }

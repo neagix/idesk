@@ -50,7 +50,7 @@ bool Application::processArguments()
         tmpStr = argv[i];
         if (tmpStr == "-h" || tmpStr == "-v" || tmpStr == "--help" || tmpStr == "--usage")
         {
-            cout << "Idesk " << VERSION << endl << "==============\n" 
+            cerr << "Idesk " << VERSION << endl << "==============\n" 
                  << "Default Prefix " << DEFAULT_PREFIX << endl << "==============\n" 
                  << "Further documentation available at:"
                  << " http://idesk.sourceforge.net\n"
@@ -85,14 +85,14 @@ void Application::startIdesk()
     
     container = new XDesktopContainer(this);
     if (!container)
-                cout << "container is NULL\n";
+                cerr << "container is NULL\n";
     container->run();
 }
 
 void Application::restartIdesk()
 {
     container->saveState();
-    cout << "restarting idesk\n";
+    cerr << "restarting idesk\n";
     delete container;
     
     

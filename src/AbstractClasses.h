@@ -209,7 +209,7 @@ class AbstractImage
 	virtual void event_leave_notify (){}
 
         virtual void configure() {} ;
-        virtual void createPicture() = 0;
+        virtual bool createPicture() = 0;
 };
 
 /*

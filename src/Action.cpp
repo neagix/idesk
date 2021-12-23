@@ -97,7 +97,7 @@ void Action::clear()
 
 void Action::print()
 {
-    cout << "Action: " << ( shift ? " shift " : "" )
+    cerr << "Action: " << ( shift ? " shift " : "" )
                        << ( control ? " control " : "" )
                        << ( alt ? " alt " : "" )
                        << " Left = " << left

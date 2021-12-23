@@ -84,7 +84,7 @@ string DesktopIconConfig::getExtension(const string & file)
         pos == (file.size() - 1) || // '.' is at end of string
         pos == file.size() )        // '.' is at beginning of string 
     {
-        cout << "Cannot determine file extension of: " << file << endl;
+        cerr << "Cannot determine file extension of: " << file << endl;
         returnString = "?";
     }
     else  //grab all of the string that is after the '.'

@@ -40,11 +40,11 @@ class Util
 	~Util();
 	static void copy(string source, string target){
 		string Buffer;
-		cout << "Loaded default file: " << source <<"\n";
+		cerr << "Loaded default file: " << source <<"\n";
 	
 		ofstream ofs( target.c_str() );
 		if (!ofs) {
-			cout << "Cannot write file: " << target << "! Exiting.\n";
+			cerr << "Cannot write file: " << target << "! Exiting.\n";
 			_exit(1);
 		}
 	
@@ -52,7 +52,7 @@ class Util
 		ifs.open(source.c_str(),ios::in);
 	
 		if (!ifs.is_open()) {
-			cout << "Cannot read file: " << source << "! Exiting.\n";
+			cerr << "Cannot read file: " << source << "! Exiting.\n";
 			_exit(1);
 		}
 		while( ifs ) {

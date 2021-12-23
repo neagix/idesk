@@ -105,7 +105,7 @@ void XImlib2Caption::createFont()
     
     XColor  screen, exact;
     if (!XAllocNamedColor (xContainer->getDisplay(), cmap, (char*)dIconConfig->getFontColor().c_str(), &screen, &exact))
-        cout << "BAD COLORS!\n";
+        cerr << "BAD COLORS!\n";
     
     XftColorAllocName(xContainer->getDisplay(), visual, cmap,
                       (char*)dIconConfig->getFontColor().c_str(), &fontColor );
@@ -121,7 +121,7 @@ Window * XImlib2Caption::getWindow()
     return &window;
 }
 
-void XImlib2Caption::createWindow()
+bool XImlib2Caption::createWindow()
 {
     XDesktopContainer * xContainer =
         dynamic_cast<XDesktopContainer *>(AbstractImage::container);
@@ -166,6 +166,7 @@ void XImlib2Caption::createWindow()
                             CopyFromParent,
 			    CWOverrideRedirect|CWEventMask|CWCursor,
                             &attr );
+    return true;
 }
 
 void XImlib2Caption::renderFont2Imlib()

@@ -81,12 +81,12 @@ class XImlib2Image : public AbstractImage
 
         virtual void configure();
         virtual void initalize();
-        virtual void createPicture();
+        virtual bool createPicture();
 
         virtual Window * getWindow();
     	virtual Window getWindowToolTip();
-        virtual void createWindow();
-	virtual void setupLayer();
+        virtual bool createWindow();
+	    virtual void setupLayer();
         virtual void lowerWindow();
         virtual void mapWindow();
         virtual void unmapWindow();
@@ -109,7 +109,7 @@ class XImlib2Image : public AbstractImage
 	void event_leave_notify ();
 #ifdef HAVE_SVG
     private:
-        void createPictureFromSvg();
+        bool createPictureFromSvg();
         // used with SVG files; reference-counted
         GdkPixbuf *vectorPixbuf;
 #endif

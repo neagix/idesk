@@ -74,7 +74,7 @@ class XImlib2Caption : public AbstractCaption, XImlib2Image
         void updateText();
 
         virtual Window * getWindow();
-        virtual void createWindow();
+        virtual bool createWindow();
         virtual void lowerWindow();
         virtual void mapWindow();
         virtual void initMapWindow();

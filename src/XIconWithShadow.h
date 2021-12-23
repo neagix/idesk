@@ -49,7 +49,7 @@ class XIconWithShadow : public XIcon
         void snapShadow();
         void lowerIcon();
 	
-	bool createIcon();
+	    bool createIcon();
         
         void dragMotionNotify(XEvent ev);
         void dragButtonRelease(XEvent ev);

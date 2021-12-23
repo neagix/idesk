@@ -31,7 +31,7 @@ ActionConfig::ActionConfig(Database db, string str) :
 
     if (!table.isValid())
     {
-        cout << "Cannot find config file or missing 'Actions' table in the "
+        cerr << "Cannot find config file or missing 'Actions' table in the "
              << "config file!\n";
         _exit(-1);
     }
