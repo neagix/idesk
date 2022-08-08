@@ -1,5 +1,4 @@
-Idesk User README 
-=================
+# Idesk User README
 
 Idesk is program that draws desktop icons. Each icon will execute a shell command on a configurable action. The icons can be moved on the desktop by dragging them, and the icons will remember their positions on start-up. Oh yea, forgot there is cool eye-candy.
 
@@ -15,13 +14,11 @@ Supported icon formats:
 
 NOTE: there are some problems with librsvg's usage of some advanced SVG files: they _cannot_ be loaded by librsvg.
 
-Dependencies
-------------
+## Dependencies
 
 See runtime dependencies in docker/Dockerfile.preview and build time dependencies in docker/Dockerfile.
 
-Build and installation
-------------
+## Build and installation
 
 You can build `idesk` in a docker container by running:
 ```
@@ -37,8 +34,7 @@ make -j
 
 Read the INSTALL file for more information.
 
-Preview
--------
+## Preview
 
 To preview idesk in a container run:
 ```
@@ -46,8 +42,7 @@ make -C docker preview
 ```
 This will start a container with X11 and x11vnc and allow you access from your host system with `vncviewer :5900` and password `idesk`.
 
-Optional Features:
-------------------
+## Optional Features:
   Idesk supports the XShape extension of X11R6.  This support is enabled by
 default, but may be overridden by specifying `--disable-shape' on the configure
 script's command line.
@@ -63,8 +58,7 @@ It is disabled by default but can be overridden by specifying
 It is disabled by default but can be overridden by specifying
 '--enable-svg' on the configure script's command line.
 
-Config file setup
------------------
+## Config file setup
 
 To use Idesk you must first setup your config file. Put something like this in `~/.config/idesktop/ideskrc`.
 
@@ -260,8 +254,7 @@ end
      xterm 
 
 
-Better Snap Explanation
------------------------
+## Better Snap Explanation
 
 
                .          .          .
@@ -287,8 +280,7 @@ So basically set snap width to the width of the "box" you want the icon containe
 
 The icon will snap to the middle of that box specified by snap width and snap height. You will typically want the width and heihgt to be a bit larger than the width and height of the icons (make the height bigger if you use a caption).
 
-Action Configuration
---------------------
+## Action Configuration
 
 In the Action table 5 different actions can be configured.
 
@@ -340,8 +332,7 @@ Some examples:
         happens by itself.
         
 
-Icon setup
---------------------------
+## Icon setup
 
 To add an icon, you need to first create a `~/.config/idesktop` directory and inside that directory create a file with `.lnk` extension, for example `home.lnk`, with content:
 
@@ -373,8 +364,7 @@ table Icon
 end
 ```
 
-Default Usage
-----------------
+## Default Usage
 
 - Double click with the first mouse button will run the command.
 - When you click the icon change its appearance (depend the fill style).
