@@ -1,4 +1,4 @@
-# Makefile.am for Idesk 0.7.8
+# Makefile.am for Idesk
 
 SUBDIRS = src
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in stamp-h.in src/default.h

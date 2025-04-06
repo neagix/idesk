@@ -1,3 +1,7 @@
+Version 0.7.9 - 6 April 2025 by neagix
+---------------------------
+* update to autoconf 2.71
+
 Version 0.7.8 - 23 December 2021 by neagix
 ---------------------------
 * prevent out of bounds error by checking index

@@ -19,17 +19,15 @@ dnl Check for various flavors of UNIX(r)
 dnl AC_AIX
 AC_ISC_POSIX
 AC_LANG_CPLUSPLUS
- 
+
 dnl Locate required external software
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_INSTALL
-AM_PROG_CC_STDC
 AC_PROG_MAKE_SET
 
 dnl Check for system header files
-AC_HEADER_STDC
-AC_CHECK_HEADERS(string.h unistd.h dirent.h stdlib.h sys/time.h time.h sys/wait.h) 
+AC_CHECK_HEADERS(string.h unistd.h dirent.h stdlib.h sys/time.h time.h sys/wait.h)
 
 AC_CHECK_HEADERS(sstream, ,
         [ AC_CHECK_HEADERS(strstream,,
@@ -39,8 +37,6 @@ AC_CHECK_HEADERS(sstream, ,
 
 
 AC_CHECK_HEADERS(cassert cctype cerrno cmath cstdarg cstdio cstdlib cstring ctime)
-
-AC_HEADER_TIME
 
 dnl Check for X headers and libraries
 AC_PATH_X([X11], [X11/Xlib.h], [XOpenDisplay(NULL)])
@@ -184,9 +180,6 @@ if test "x$XFT" = "xtrue" ; then
 fi
 
 AM_CONDITIONAL(XFT, test x$XFT = xtrue)
-
-dnl Determine the return type of signal handlers
-AC_TYPE_SIGNAL
 
 dnl Determine if maintainer portions of the Makefiles should be included.
 dnl AM_MAINTAINER_MODE

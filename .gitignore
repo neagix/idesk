@@ -12,3 +12,7 @@
 /compile
 /depcomp
 /stamp-h1
+/configure
+/Makefile.in
+/src/Makefile.in
+/aclocal.m4
